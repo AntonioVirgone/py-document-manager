@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('createDirectory', views.createDirectory, name='createDirectory'),
-    path('createDocument', views.createDocument, name='createDocument'),
+    path('document', views.createDocument, name='createDocument'),
+    path('document/directory', views.createDirectory, name='createDirectory'),
+    path('document/directory/all', views.findAllDirectory, name='findAllDirectory'),
 ]

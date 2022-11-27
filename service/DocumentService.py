@@ -2,7 +2,7 @@ import uuid
 
 from document_deploy.models import Document
 from service import CreateDocumentService
-from service.DataDocument import DataDocument
+from service.model.DataDocument import DataDocument
 
 from django.core import serializers
 
@@ -17,7 +17,13 @@ class DocumentService:
     def create(data):
         dataDocument = DataDocument.fromJson(data)
 
-        document = Document(code=str(uuid.uuid4()), name=dataDocument.fileName, root=dataDocument.directoryName)
+        document = Document(code=str(uuid.uuid4()),
+                            projectName=dataDocument.fileName,
+                            serviceName=dataDocument.serviceName,
+                            directoryName=dataDocument.directoryName,
+                            serviceVersion=dataDocument.serviceVersion,
+                            gkeServiceName=dataDocument.gkeServiceName,
+                            fileName=dataDocument.fileName)
         document.save()
 
         CreateDocumentService.createDocument(dataDocument)
@@ -28,6 +34,5 @@ class DocumentService:
 
     @staticmethod
     def findInRoot(root):
-        articles = Document.objects.all().filter(root=root)
+        articles = Document.objects.all().filter(directoryName=root)
         return jsonSerializer(articles)
-

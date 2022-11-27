@@ -2,8 +2,6 @@ class DataDocument:
     def __init__(self,
                  projectName,
                  directoryName,
-                 googleCloudName,
-                 clusterName,
                  fileName,
                  serviceName,
                  serviceVersion,
@@ -11,8 +9,6 @@ class DataDocument:
                  commandList):
         self.projectName = projectName
         self.directoryName = directoryName
-        self.googleCloudName = googleCloudName
-        self.clusterName = clusterName
         self.fileName = fileName
         self.serviceName = serviceName
         self.serviceVersion = serviceVersion
@@ -24,8 +20,6 @@ class DataDocument:
         print("json is %s" % json)
         return DataDocument(json['projectName'],
                             json['directoryName'],
-                            json['googleCloudName'],
-                            json['clusterName'],
                             json['fileName'],
                             json['serviceName'],
                             json['serviceVersion'],

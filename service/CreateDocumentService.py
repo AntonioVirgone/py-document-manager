@@ -84,6 +84,4 @@ def createDocument(dataDocument):
         createParagraphBody(document, command, 'List Continue 2', True, Constant.FONT_TIMES_NEW_ROMAN)
     document.add_paragraph()
 
-    parent_dir = "../py_document_manager/service"
-
-    document.save(parent_dir + "/" + dataDocument.directoryName + "/" + dataDocument.fileName)
+    document.save(Constant.PARENT_DIR + "/" + dataDocument.directoryName + "/" + dataDocument.fileName)

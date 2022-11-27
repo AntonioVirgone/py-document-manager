@@ -3,8 +3,9 @@ import json
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 
-from service.DirService import DirService
+from service.DirectoryService import DirectoryService
 from service.DocumentService import DocumentService
+from service.model.DirectoryViewModel import DirectoryViewModel, DirectoryViewModelEncoder
 
 
 def index(request):
@@ -19,9 +20,15 @@ def index(request):
 @api_view(['POST'])
 def createDirectory(request):
     dirName = request.GET.get("dirName")
+    code = DirectoryService.create(dirName)
 
-    if DirService.create(dirName):
-        return HttpResponse("Creazione cartella %s completata" % dirName)
+    if code:
+        json_str = json.dumps(DirectoryViewModel(directoryCode=code, directoryName=dirName), cls=DirectoryViewModelEncoder)
+
+        print(json_str)
+        return HttpResponse(
+            json_str,
+            content_type="application/json")
     else:
         return HttpResponse("Creazione cartella %s fallita" % dirName)
 
@@ -36,9 +43,7 @@ def createDocument(request):
         return HttpResponse("Errore durante la creazione del documento")
 
 
-
-# def downloadDocument(filename, directory):
-#     return send_file(path_or_file=directory + "/" + filename,
-#                      mimetype="application/octet-stream",
-#                      as_attachment=True,
-#                      download_name=filename)
+def findAllDirectory(request):
+    print("ciao")
+    list = DirectoryService.getDirectoryList()
+    return HttpResponse(json.dumps(list), content_type="application/json")
